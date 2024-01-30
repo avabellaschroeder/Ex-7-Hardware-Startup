@@ -31,3 +31,15 @@ from dpeaDPi.DPiStepper import *
 from time import sleep
 
 
+dpiStepper = DPiStepper()
+
+dpiStepper.setBoardNumber(0)
+
+
+if dpiStepper.initialize() != True:
+    print("Communication with the DPiStepper board failed.")
+
+dpiStepper.enableMotors(True)
+
+microstepping = 8
+dpiStepper.setMicrostepping(microstepping)
