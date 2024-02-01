@@ -2,7 +2,6 @@ import pygame
 import os
 import kivy
 
-
 os.environ['DISPLAY'] = ":0.0"
 os.environ['KIVY_WINDOW'] = 'egl_rpi'
 
@@ -34,6 +33,8 @@ time = datetime
 from dpeaDPi.DPiComputer import DPiComputer
 from dpeaDPi.DPiStepper import *
 from time import sleep
+
+from DPiStepper_Startup import microstepping
 
 
 MIXPANEL_TOKEN = "x"
@@ -78,41 +79,29 @@ dpiStepper.enableMotors(True)
 
 class StepperScreen(Screen):
 
-
     def pressed(self):
         """
         Function called on button touch event for button with id: testButton
         :return: None
         """
-        print("Callback from MainScreen.pressed()")
+        print("Callback from StepperScreen.pressed()")
 
-    # press_count = NumericProperty(0)
-    # def pressed(self, button):
-    #     """f
-    #     Function called on button touch event for button with id: testButton
-    #     :return: None
-    #     """
-    #     global button_toggle
-    #     self.press_count += 1
-    #
-    #     print("Callback from StepperScreen.pressed()")
-    #
-    #     if button_toggle == False:
-    #         button_toggle = True
-    #         button.text = ''
-    #
-    #     else:
-    #         button_toggle = False
-    #         button.text = 'RACOON'
+
+
 
 
 
 # class Motor:
-#     def __init__(self):
-
-
-        # microstepping = 8
-        # dpiStepper.setMicrostepping(microstepping)
+#     # speed_steps_per_second = 200 * microstepping
+#     # accel_steps_per_second_per_second = speed_steps_per_second
+#     # dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
+#     # dpiStepper.setSpeedInStepsPerSecond(1, speed_steps_per_second)
+#     # dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
+#     # dpiStepper.setAccelerationInStepsPerSecondPerSecond(1, accel_steps_per_second_per_second)
+#
+#     def motorOnOff(self):
+#         microstepping = 8
+#         dpiStepper.setMicrostepping(microstepping)
 
 
 
