@@ -1,3 +1,14 @@
 <StepperScreen>:
 
-    name:
+    name: 'stepper'
+    FloatLayout:
+        size_hint: None, None
+
+    DPEAButton:
+        id: test_button
+        text: 'kith'
+        size: 100, 100
+        x: root.width * 0.75
+        y: root.height * 0.5
+        color: 1, 0.3, 0.5, 1
+ #       on_press: root.transition(test_button)
