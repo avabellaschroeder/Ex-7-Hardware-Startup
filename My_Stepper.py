@@ -34,16 +34,12 @@ from dpeaDPi.DPiComputer import DPiComputer
 from dpeaDPi.DPiStepper import *
 from time import sleep
 
-from DPiStepper_Startup import microstepping
-
 
 MIXPANEL_TOKEN = "x"
 MIXPANEL = MixPanel("My Stepper", MIXPANEL_TOKEN)
 
 SCREEN_MANAGER = ScreenManager()
 STEPPER_SCREEN_NAME = 'stepper'
-
-
 
 
 class MyStepperGUI(App):
@@ -64,16 +60,16 @@ Window.clearcolor = (.132, .156, .194, 1)  # White
 
 button_toggle = False
 
+# create stepper object
 dpiStepper = DPiStepper()
 
+# set the stepper board number
 dpiStepper.setBoardNumber(0)
 
 # initialize stepper
-
 if dpiStepper.initialize() != True:
     print("Communication with the DPiStepper board failed.")
 
-dpiStepper.enableMotors(True)
 
 
 
@@ -87,21 +83,33 @@ class StepperScreen(Screen):
         print("Callback from StepperScreen.pressed()")
 
 
+class Motor:
+
+    dpiStepper.enableMotors(True)
+
+    def motorOnOff(self):
+
+        microstepping = 8
+        dpiStepper.setMicrostepping(microstepping)
+
+        speed_steps_per_second = 200 * microstepping
+        accel_steps_per_second_per_second = speed_steps_per_second
+        dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
+        dpiStepper.setSpeedInStepsPerSecond(1, speed_steps_per_second)
+        dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
+        dpiStepper.setAccelerationInStepsPerSecondPerSecond(1, accel_steps_per_second_per_second)
+
+        steps_to_move = 1000
+
+        # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
+        dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg=True)
+
+        # Disable the motors when done
+        dpiStepper.enableMotors(False)
+
+        print("motorOnOff() called")
 
 
-
-
-# class Motor:
-#     # speed_steps_per_second = 200 * microstepping
-#     # accel_steps_per_second_per_second = speed_steps_per_second
-#     # dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
-#     # dpiStepper.setSpeedInStepsPerSecond(1, speed_steps_per_second)
-#     # dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
-#     # dpiStepper.setAccelerationInStepsPerSecondPerSecond(1, accel_steps_per_second_per_second)
-#
-#     def motorOnOff(self):
-#         microstepping = 8
-#         dpiStepper.setMicrostepping(microstepping)
 
 
 
@@ -125,3 +133,5 @@ if __name__ == "__main__":
     # send_event("Project Initialized")
     # Window.fullscreen = 'auto'
     MyStepperGUI().run()
+
+    
