@@ -82,32 +82,47 @@ class StepperScreen(Screen):
         """
         print("Callback from StepperScreen.pressed()")
 
+    def motorOnOff(self):
+
+        # dpiStepper.enableMotors(True)
+
+        if dpiStepper.enableMotors(True):
+
+            microstepping = 8
+            dpiStepper.setMicrostepping(microstepping)
+
+            speed_steps_per_second = 200 * microstepping
+            accel_steps_per_second_per_second = speed_steps_per_second
+            dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
+            dpiStepper.setSpeedInStepsPerSecond(1, speed_steps_per_second)
+            dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
+            dpiStepper.setAccelerationInStepsPerSecondPerSecond(1, accel_steps_per_second_per_second)
+
+            steps_to_move = 1000
+
+            # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
+            dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg=True)
+
+            # # Disable the motors when done
+            # dpiStepper.enableMotors(False)
+
+            print("motorOnOff() called: motor on code")
+
+        else:
+            # Disable the motors
+            dpiStepper.enableMotors(False)
+
+            print("motorOnOff() called: motor off")
+
+    print("motorOnOff() called")
+
+
+
 
 class Motor:
 
     dpiStepper.enableMotors(True)
 
-    def motorOnOff(self):
-
-        microstepping = 8
-        dpiStepper.setMicrostepping(microstepping)
-
-        speed_steps_per_second = 200 * microstepping
-        accel_steps_per_second_per_second = speed_steps_per_second
-        dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
-        dpiStepper.setSpeedInStepsPerSecond(1, speed_steps_per_second)
-        dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
-        dpiStepper.setAccelerationInStepsPerSecondPerSecond(1, accel_steps_per_second_per_second)
-
-        steps_to_move = 1000
-
-        # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
-        dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg=True)
-
-        # Disable the motors when done
-        dpiStepper.enableMotors(False)
-
-        print("motorOnOff() called")
 
 
 
