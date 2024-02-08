@@ -4,10 +4,21 @@
         size_hint: None, None
 
     DPEAButton:
+    # motorOnOff button
         id: test_button
-        text: 'kith'
+        text: 'Off'
+        size: 100, 100
+        x: root.width * 0.5
+        y: root.height * 0.5
+        color: 1, 0.3, 0.5, 1
+        on_press: root.motorOnOff()
+
+    DPEAButton:
+    # motorSpecific button
+        id: test_button2
+        text: 'raccoon'
         size: 100, 100
         x: root.width * 0.75
         y: root.height * 0.5
         color: 1, 0.3, 0.5, 1
-        on_press: root.motorOnOff()
+        on_press: root.motorSpecific()
