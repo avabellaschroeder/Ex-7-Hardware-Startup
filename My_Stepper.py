@@ -5,8 +5,6 @@ import kivy
 os.environ['DISPLAY'] = ":0.0"
 os.environ['KIVY_WINDOW'] = 'egl_rpi'
 
-from pidev.Joystick import Joystick
-
 from kivy.clock import Clock
 from kivy.app import App
 from kivy.core.window import Window
@@ -41,7 +39,6 @@ MIXPANEL = MixPanel("My Stepper", MIXPANEL_TOKEN)
 SCREEN_MANAGER = ScreenManager()
 STEPPER_SCREEN_NAME = 'stepper'
 
-
 class MyStepperGUI(App):
     """
     Class to handle running the GUI Application
@@ -66,7 +63,7 @@ dpiStepper = DPiStepper()
 # set the stepper board number
 dpiStepper.setBoardNumber(0)
 
-waitToFinishFlg = True
+# waitToFinishFlg = True
 
 # initialize stepper
 if dpiStepper.initialize() != True:
@@ -77,6 +74,16 @@ if dpiStepper.initialize() != True:
 
 class StepperScreen(Screen):
 
+    # microstepping = 8
+    # dpiStepper.setMicrostepping(microstepping)
+    # speed_steps_per_second = 200 * microstepping
+    # accel_steps_per_second_per_second = speed_steps_per_second
+    # dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
+    # dpiStepper.setSpeedInStepsPerSecond(1, speed_steps_per_second)
+    # dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
+    # dpiStepper.setAccelerationInStepsPerSecondPerSecond(1, accel_steps_per_second_per_second)
+
+
     def pressed(self):
         """
         Function called on button touch event for button with id: testButton
@@ -86,46 +93,41 @@ class StepperScreen(Screen):
 
     def motorOnOff(self):
 
-        if self.ids.test_button.text == 'kith':
-
-            dpiStepper.enableMotors(True)
-
-            microstepping = 8
-            dpiStepper.setMicrostepping(microstepping)
-
-            speed_steps_per_second = 200 * microstepping
-            accel_steps_per_second_per_second = speed_steps_per_second
-            dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
-            dpiStepper.setSpeedInStepsPerSecond(1, speed_steps_per_second)
-            dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
-            dpiStepper.setAccelerationInStepsPerSecondPerSecond(1, accel_steps_per_second_per_second)
-
-            steps_to_move = 1000
-
-            # dpiStepper.setCurrentPositionInSteps(0, 0)
-
-            # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
-            dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg)
-
-            # # Disable the motors when done
-            # dpiStepper.enableMotors(False)
-
-            self.ids.test_button.text = 'blah'
-
+        if self.ids.test_button.text == 'Off':
 
             print("motorOnOff() called: motor on code")
 
-        else:
-            sleep(2)
+            self.ids.test_button.text = 'On'
 
+            dpiStepper.enableMotors(True)
+
+            steps_to_move = 100000
+
+            # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
+            dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg=False)
+
+        else:
             # Disable the motors
             dpiStepper.enableMotors(False)
 
-            self.ids.test_button.text = 'kith'
+            self.ids.test_button.text = 'Off'
 
             print("motorOnOff() called: motor off")
 
-    print("motorOnOff() called")
+
+    def motorSpecific(self):
+
+            dpiStepper.enableMotors(True)
+
+            steps_to_move = 1000
+
+            # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
+            dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg=True)
+
+            dpiStepper.enableMotors(False)
+
+            print("motorSpecific() called: motor on code")
+
 
 
 
