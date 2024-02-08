@@ -88,6 +88,8 @@ class StepperScreen(Screen):
 
         if self.ids.test_button.text == 'kith':
 
+            dpiStepper.enableMotors(True)
+
             microstepping = 8
             dpiStepper.setMicrostepping(microstepping)
 
@@ -98,15 +100,15 @@ class StepperScreen(Screen):
             dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
             dpiStepper.setAccelerationInStepsPerSecondPerSecond(1, accel_steps_per_second_per_second)
 
-            # steps_to_move = 1000
+            steps_to_move = 1000
 
-            dpiStepper.setCurrentPositionInSteps(0, 0)
+            # dpiStepper.setCurrentPositionInSteps(0, 0)
 
             # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
-            dpiStepper.moveToRelativePositionInSteps(0, 15, waitToFinishFlg)
+            dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg)
 
             # # Disable the motors when done
-            dpiStepper.enableMotors(False)
+            # dpiStepper.enableMotors(False)
 
             self.ids.test_button.text = 'blah'
 
