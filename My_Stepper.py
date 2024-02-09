@@ -92,6 +92,7 @@ class StepperScreen(Screen):
         print("Callback from StepperScreen.pressed()")
 
     def motorOnOff(self):
+        # function that turns on and off the motor
 
         if self.ids.test_button.text == 'Off':
 
@@ -114,8 +115,44 @@ class StepperScreen(Screen):
 
             print("motorOnOff() called: motor off")
 
+    def switchDirection(self):
+    #     motor switches direction
+
+        print("switchDirection() called: flip a biotch code")
+
+        dpiStepper.enableMotors(True)
+
+        if self.ids.test_button3.text == 'bop it, twist it':
+
+            print("switchDirection() called: counterclockwise?")
+
+            self.ids.test_button3.text = 'flip it'
+
+            steps_to_move = -1000
+
+            # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
+            dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg=False)
+
+        elif self.ids.test_button3.text == 'flip it':
+            print("switchDirection() called: clockwise?")
+
+            steps_to_move = 1000
+
+            # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
+            dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg=False)
+
+            self.ids.test_button3.text = 'bop it, twist it'
+
+        else:
+            print("something not right")
+
+            dpiStepper.enableMotors(False)
+
+    dpiStepper.enableMotors(False)
+
 
     def motorSpecific(self):
+            # motor code with specific pattern
 
             dpiStepper.enableMotors(True)
 
@@ -127,14 +164,6 @@ class StepperScreen(Screen):
             dpiStepper.enableMotors(False)
 
             print("motorSpecific() called: motor on code")
-
-
-
-
-
-# class Motor:
-#     def __init__(self)
-
 
 
 
