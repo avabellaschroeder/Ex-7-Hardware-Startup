@@ -32,3 +32,20 @@
         y: root.height * 0.5
         color: 1, 0.3, 0.5, 1
         on_press: root.motorSpecific()
+
+    Slider:
+    # changes speed of stepper motor
+        id: slider
+        min: 0
+        max: 100
+        step: 1
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: 200, 30  # Adjust size as needed
+        pos: root.width * 0.5 - self.width / 2, root.height * 0.1
+
+    Label:
+        id: slider_label
+        text: str(slider.value)
+        center_x: root.width * 0.2
+        center_y: root.height * 0.5
