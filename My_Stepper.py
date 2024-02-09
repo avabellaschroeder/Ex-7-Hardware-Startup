@@ -117,6 +117,7 @@ class StepperScreen(Screen):
 
     def switchDirection(self):
     #     motor switches direction
+    # when button reads "flip it" it goes counterclockwise
 
         print("switchDirection() called: flip a biotch code")
 
@@ -128,7 +129,7 @@ class StepperScreen(Screen):
 
             self.ids.test_button3.text = 'flip it'
 
-            steps_to_move = -1000
+            steps_to_move = -1000000
 
             # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
             dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg=False)
@@ -136,12 +137,12 @@ class StepperScreen(Screen):
         elif self.ids.test_button3.text == 'flip it':
             print("switchDirection() called: clockwise?")
 
-            steps_to_move = 1000
+            self.ids.test_button3.text = 'bop it, twist it'
+
+            steps_to_move = 1000000
 
             # move the specified number of steps (what stepper, # of steps, wait til finished to move to next bit of code)
             dpiStepper.moveToRelativePositionInSteps(0, steps_to_move, waitToFinishFlg=False)
-
-            self.ids.test_button3.text = 'bop it, twist it'
 
         else:
             print("something not right")
