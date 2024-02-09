@@ -14,6 +14,16 @@
         on_press: root.motorOnOff()
 
     DPEAButton:
+    # switchDirection button
+        id: test_button3
+        text: 'bop it, twist it'
+        size: 100, 100
+        x: root.width * 0.25
+        y: root.height * 0.5
+        color: 1, 0.3, 0.5, 1
+        on_press: root.switchDirection()
+
+    DPEAButton:
     # motorSpecific button
         id: test_button2
         text: 'raccoon'
