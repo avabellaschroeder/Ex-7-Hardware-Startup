@@ -166,6 +166,24 @@ class StepperScreen(Screen):
 
             print("motorSpecific() called: motor on code")
 
+    def sliderSpeed(self):
+        # use slider to change speed
+        print("sliderSpeed() called: you touched the slider")
+
+        stepper_num = 0
+        dpiStepper.setCurrentPositionInSteps(stepper_num, 0)
+
+        dpiStepper.enableMotors(True)
+
+        speed_in_revolutions_per_sec = int(self.ids.slider.value)
+        dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
+
+
+        dpiStepper.moveToAbsolutePositionInSteps(stepper_num, 1600, waitToFinishFlg=False)
+
+        dpiStepper.enableMotors(False)
+
+
 
 
 
