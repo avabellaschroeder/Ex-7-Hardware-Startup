@@ -63,6 +63,9 @@ dpiStepper = DPiStepper()
 # set the stepper board number
 dpiStepper.setBoardNumber(0)
 
+microstepping = 8
+dpiStepper.setMicrostepping(microstepping)
+
 # waitToFinishFlg = True
 
 # initialize stepper
@@ -173,7 +176,14 @@ class StepperScreen(Screen):
         stepper_num = 0
         dpiStepper.setCurrentPositionInSteps(stepper_num, 0)
 
+        speed_steps_per_second = 200 * microstepping
+        directionToMoveTowardHome = 1  # 1 Positive Direction -1 Negative Direction
+        homeSpeedInStepsPerSecond = speed_steps_per_second / 2
+        homeMaxDistanceToMoveInSteps = 3200
+
         dpiStepper.enableMotors(True)
+
+        dpiStepper.moveToHomeInSteps(stepper_num, directionToMoveTowardHome, homeSpeedInStepsPerSecond, homeMaxDistanceToMoveInSteps)
 
         speed_in_revolutions_per_sec = int(self.ids.slider.value)
         dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
