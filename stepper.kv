@@ -37,12 +37,14 @@
     # changes speed of stepper motor
         id: slider
         min: 0
-        max: 100
+        max: 10
         step: 1
         orientation: 'horizontal'
         size_hint: None, None
         size: 200, 30  # Adjust size as needed
         pos: root.width * 0.5 - self.width / 2, root.height * 0.1
+        on_touch_move: root.sliderSpeed()
+        on_touch_down: root.sliderSpeed()
 
     Label:
         id: slider_label
