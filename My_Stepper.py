@@ -174,27 +174,21 @@ class StepperScreen(Screen):
         print("sliderSpeed() called: you touched the slider")
 
         stepper_num = 0
-        dpiStepper.setCurrentPositionInSteps(stepper_num, 0)
+        dpiStepper.setCurrentPositionInRevolutions(stepper_num, 0)
 
-        speed_steps_per_second = 200 * microstepping
-        directionToMoveTowardHome = 1  # 1 Positive Direction -1 Negative Direction
-        homeSpeedInStepsPerSecond = speed_steps_per_second / 2
-        homeMaxDistanceToMoveInSteps = 3200
+        gear_ratio = 1
+        motor_step_per_revolution = 1600 * gear_ratio
+        dpiStepper.setStepsPerRevolution(stepper_num, motor_step_per_revolution)
 
         dpiStepper.enableMotors(True)
-
-        dpiStepper.moveToHomeInSteps(stepper_num, directionToMoveTowardHome, homeSpeedInStepsPerSecond, homeMaxDistanceToMoveInSteps)
 
         speed_in_revolutions_per_sec = int(self.ids.slider.value)
         dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
 
+        dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 20, waitToFinishFlg=False)
 
-        dpiStepper.moveToAbsolutePositionInSteps(stepper_num, 1600, waitToFinishFlg=False)
-
-        dpiStepper.enableMotors(False)
-
-
-
+        # sleep(2)
+        # dpiStepper.enableMotors(False)
 
 
 
@@ -218,5 +212,3 @@ if __name__ == "__main__":
     # send_event("Project Initialized")
     # Window.fullscreen = 'auto'
     MyStepperGUI().run()
-
-    
