@@ -145,10 +145,11 @@ class StepperScreen(Screen):
     dpiStepper.enableMotors(False)
 
 
-    def motorSpecific(self):
+    def motorSpecific1(self):
         # motor code with specific pattern
+        # 1 revs/sec for 15 revolutions. print current position and pause
 
-        print("motorSpecific() called: beginning")
+        print("motorSpecific1() called: beginning")
 
         stepper_num = 0
         dpiStepper.enableMotors(True)
@@ -159,7 +160,6 @@ class StepperScreen(Screen):
         currentPosition = dpiStepper.getCurrentPositionInRevolutions(0)[1]
         print("current position in revs: " + str(currentPosition))
 
-        # 1 revs/sec for 15 revolutions. print current position and pause
         # set speed
         speed_in_revolutions_per_sec = 1.0
         dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
@@ -171,19 +171,43 @@ class StepperScreen(Screen):
 
         sleep(10)
 
+        self.motorSpecific2()
 
+    def motorSpecific2(self):
         # 5 revs/sec for 10 revolutions. print current position and stop for 8
+        print("motorSpecific2() called: beginning")
+
+        stepper_num = 0
+        dpiStepper.enableMotors(True)
+
         speed_in_revolutions_per_sec = 5.0
         dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
 
-        dpiStepper.moveToAbsolutePositionInRevolutions(0, 10, waitToFinishFlg=True)
+        currentPosition = dpiStepper.getCurrentPositionInRevolutions(0)[1]
 
-        print("current position in revs: " + str(currentPosition))
-
+        dpiStepper.moveToAbsolutePositionInRevolutions(0, 10.5, waitToFinishFlg=True)
 
         dpiStepper.enableMotors(False)
 
-        print("motorSpecific() called: end of code")
+        print("current position in revs: " + str(currentPosition))
+        print("motorSpecific2() called: end of code")
+
+        sleep(8)
+        self.motorSpecific3()
+
+    def motorSpecific3(self):
+        # goes home and stops for 30 secs and then prints get position value
+        print("motorSpecific3() called: beginning")
+
+        stepper_num = 0
+        dpiStepper.enableMotors(True)
+
+
+
+
+
+
+
 
     def sliderSpeed(self):
         # use slider to change speed
