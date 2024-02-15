@@ -151,31 +151,37 @@ class StepperScreen(Screen):
 
         print("motorSpecific1() called: beginning")
 
-        # stepper_num = 0
-        # dpiStepper.enableMotors(True)
-        #
-        # # # set current position to zero
-        # # dpiStepper.setCurrentPositionInRevolutions(stepper_num, 0.0)
-        #
-        # currentPosition = dpiStepper.getCurrentPositionInRevolutions(0)[1]
-        # print("current position in revs: " + str(currentPosition))
-        #
-        # # set speed
-        # speed_in_revolutions_per_sec = 1.0
-        # dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
-        #
-        # # move the specified number of steps (what stepper, # position to move to in rev, wait til finished to move to next bit of code)
-        # dpiStepper.moveToAbsolutePositionInRevolutions(0, 15, waitToFinishFlg=True)
-        #
-        # print("current position in revs: " + str(currentPosition))
-        # print("motorSpecific1() called: end of one")
-        # sleep(10)
+        stepper_num = 0
+        dpiStepper.enableMotors(True)
+
+        # # set current position to zero
+        # dpiStepper.setCurrentPositionInRevolutions(stepper_num, 0.0)
+
+        currentPosition = dpiStepper.getCurrentPositionInRevolutions(0)[1]
+        print("current position in revs: " + str(currentPosition))
+
+        # set speed
+        speed_in_revolutions_per_sec = 1.0
+        dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
+
+        # move the specified number of steps (what stepper, # position to move to in rev, wait til finished to move to next bit of code)
+        dpiStepper.moveToAbsolutePositionInRevolutions(0, 15, waitToFinishFlg=True)
+        # waitToFinishFlg=True
+
+        while not dpiStepper.getMotionComplete(0):
+            pass
+
+        print("current position in revs: " + str(currentPosition))
+        print("motorSpecific1() called: end of one")
+        dpiStepper.enableMotors(False)
+        sleep(10)
 
         self.motorSpecific2()
 
     def motorSpecific2(self):
         # 5 revs/sec for 10 revolutions. print current position and stop for 8
         print("motorSpecific2() called: beginning of two")
+
 
         stepper_num = 0
         dpiStepper.enableMotors(True)
@@ -185,7 +191,7 @@ class StepperScreen(Screen):
         speed_in_revolutions_per_sec = 5.0
         dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
 
-        dpiStepper.moveToAbsolutePositionInRevolutions(0, 10.5, waitToFinishFlg=True)
+        dpiStepper.moveToRelativePositionInRevolutions(0, 10.5, waitToFinishFlg=True)
 
         dpiStepper.enableMotors(False)
 
@@ -218,7 +224,7 @@ class StepperScreen(Screen):
         print("motorSpecific3() called: end of three")
         sleep(30)
 
-
+    # dpiStepper.getMotionComplete(False)
 
 
     def sliderSpeed(self):
@@ -264,6 +270,3 @@ if __name__ == "__main__":
     # send_event("Project Initialized")
     # Window.fullscreen = 'auto'
     MyStepperGUI().run()
-
-
-dpistepper.getmotioncomplete
