@@ -8,8 +8,7 @@
         id: test_button
         text: 'Off'
         size: 100, 100
-        x: root.width * 0.5
-        y: root.height * 0.5
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
         color: 1, 0.3, 0.5, 1
         on_press: root.motorOnOff()
 
@@ -18,8 +17,7 @@
         id: test_button3
         text: 'bop it, twist it'
         size: 100, 100
-        x: root.width * 0.25
-        y: root.height * 0.5
+        pos_hint: {"center_x": 0.25, "center_y": 0.5}
         color: 1, 0.3, 0.5, 1
         on_press: root.switchDirection()
 
@@ -28,8 +26,7 @@
         id: test_button2
         text: 'raccoon'
         size: 100, 100
-        x: root.width * 0.75
-        y: root.height * 0.5
+        pos_hint: {"center_x": 0.75, "center_y": 0.5}
         color: 1, 0.3, 0.5, 1
         on_press: root.motorSpecific1()
 
@@ -42,12 +39,11 @@
         orientation: 'horizontal'
         size_hint: None, None
         size: 200, 30  # Adjust size as needed
-        pos: root.width * 0.5 - self.width / 2, root.height * 0.1
+        pos_hint: {"center_x": 0.5, "center_y": 0.15}
         sensitivity: 'handle'
         on_value: root.sliderSpeed()
 
     Label:
         id: slider_label
         text: str(slider.value)
-        center_x: root.width * .04
-        center_y: root.height * -.2
+        pos_hint: {"center_x": 0.5, "center_y": 0.185}
