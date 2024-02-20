@@ -168,15 +168,13 @@ class StepperScreen(Screen):
         dpiStepper.moveToAbsolutePositionInRevolutions(0, 15, waitToFinishFlg=True)
         # waitToFinishFlg=True
 
-        while not dpiStepper.getMotionComplete(0):
-            pass
+        # while not dpiStepper.getMotionComplete(0):
+        #     pass
 
         print("current position in revs: " + str(currentPosition))
         print("motorSpecific1() called: end of one")
         dpiStepper.enableMotors(False)
-        sleep(10)
 
-        self.motorSpecific2()
 
     def motorSpecific2(self):
         # 5 revs/sec for 10 revolutions. print current position and stop for 8
@@ -191,15 +189,13 @@ class StepperScreen(Screen):
         speed_in_revolutions_per_sec = 5.0
         dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
 
-        dpiStepper.moveToRelativePositionInRevolutions(0, 10.5, waitToFinishFlg=True)
+        dpiStepper.moveToRelativePositionInRevolutions(0, 10, waitToFinishFlg=True)
 
         dpiStepper.enableMotors(False)
 
         print("current position in revs: " + str(currentPosition))
         print("motorSpecific2() called: end of two")
-        sleep(8)
 
-        self.motorSpecific3()
 
     def motorSpecific3(self):
         # goes home and stops for 30 secs and then prints get position value
@@ -209,23 +205,31 @@ class StepperScreen(Screen):
         dpiStepper.enableMotors(True)
 
         currentPosition = dpiStepper.getCurrentPositionInRevolutions(0)[1]
+        print("current position in revs: " + str(currentPosition))
+        home = dpiStepper.setCurrentPositionInRevolutions(0, 0.0)
 
         speed_in_revolutions_per_sec = 1.0
         dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, speed_in_revolutions_per_sec)
 
         directionToMoveTowardHome = 1  # 1 Positive Direction -1 Negative Direction
-        homeMaxDistanceToMoveInRevolutions = 3.5
+        # MaxDistanceToMoveInRevolutions = 3.5
 
-        dpiStepper.moveToHomeInRevolutions(stepper_num, directionToMoveTowardHome, speed_in_revolutions_per_sec, homeMaxDistanceToMoveInRevolutions)
+        dpiStepper.moveToHomeInRevolutions(stepper_num, directionToMoveTowardHome, speed_in_revolutions_per_sec, home)
 
         dpiStepper.enableMotors(False)
 
         print("current position in revs: " + str(currentPosition))
         print("motorSpecific3() called: end of three")
-        sleep(30)
 
     # dpiStepper.getMotionComplete(False)
 
+    def motorSpecificMother(self):
+        # self.motorSpecific1() #15 revs
+        # sleep(10)
+        # self.motorSpecific2() #10 revs
+        # sleep(8)
+        self.motorSpecific3() #homing
+        # sleep(30)
 
     def sliderSpeed(self):
         # use slider to change speed
