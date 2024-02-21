@@ -301,4 +301,4 @@ print(f"Communication errors count = {comm_errors}")
 #    getCurrentPositionInRevolutions(stepperNum)
 #    getCurrentVelocityInRevolutionsPerSecond(stepperNum)
 #    moveToHomeInRevolutions(stepperNum, directionTowardHome, speedInRevolutionsPerSecond, maxDistanceToMoveInRevolutions)
-#
+# # dpiStepper.setCurrentPositionInSteps(0, 0)
