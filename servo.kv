@@ -1,0 +1,13 @@
+<ServoScreen>:
+    name: 'servo'
+    FloatLayout:
+        size_hint: None, None
+
+    DPEAButton:
+    # servo button
+        id: servo_button
+        text: 'serving'
+        size: 100, 100
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        color: 1, 0.3, 0.5, 1
+        on_press: root.servo()
