@@ -14,6 +14,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.properties import NumericProperty
 from kivy.uix.slider import Slider
+from kivy.uix import switch
 
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
@@ -306,14 +307,25 @@ class StepperScreen(Screen):
         # dpiStepper.enableMotors(False)
 
 class ServoScreen(Screen):
+
+    def switchscreen(self):
+        SCREEN_MANAGER.current = STEPPER_SCREEN_NAME
     def servo(self):
-        print("Servo example:")
+        print("servo moving")
         # Rotate Servo 0 CW
         i = 0
         servo_number = 0
         for i in range(180):
             dpiComputer.writeServo(servo_number, i)
             sleep(.05)
+    # def servoswitch(self):
+    #     if switch.value:
+    #         time.sleep(0.05)
+    #         # wait 50 ms to see if switch is still on
+    #         if switch.value:
+    #             # ok, it's really pressed
+
+
 
 
 
