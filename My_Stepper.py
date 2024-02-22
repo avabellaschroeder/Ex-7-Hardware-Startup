@@ -32,12 +32,38 @@ from dpeaDPi.DPiComputer import DPiComputer
 from dpeaDPi.DPiStepper import *
 from time import sleep
 
+from dpeaDPi.DPiComputer import *
+from time import sleep
+
 
 MIXPANEL_TOKEN = "x"
 MIXPANEL = MixPanel("My Stepper", MIXPANEL_TOKEN)
 
 SCREEN_MANAGER = ScreenManager()
 STEPPER_SCREEN_NAME = 'stepper'
+SERVO_SCREEN_NAME = 'servo'
+
+
+# STEPPER SETUP BELOW
+# STEPPER SHIT
+# create stepper object
+dpiStepper = DPiStepper()
+# set the stepper board number
+dpiStepper.setBoardNumber(0)
+microstepping = 8
+dpiStepper.setMicrostepping(microstepping)
+# # waitToFinishFlg = True
+# initialize stepper
+if dpiStepper.initialize() != True:
+    print("Communication with the DPiStepper board failed.")
+
+# SERVO SETUP BELOW
+# SERVO SHIT
+dpiComputer = DPiComputer()
+# create DPiComputer object
+dpiComputer.initialize()
+# initialize to computers initial values
+
 
 class MyStepperGUI(App):
     """
@@ -57,32 +83,10 @@ Window.clearcolor = (.132, .156, .194, 1)  # White
 
 button_toggle = False
 
-# create stepper object
-dpiStepper = DPiStepper()
-
-# set the stepper board number
-dpiStepper.setBoardNumber(0)
-
-microstepping = 8
-dpiStepper.setMicrostepping(microstepping)
-
-# waitToFinishFlg = True
-
-# initialize stepper
-if dpiStepper.initialize() != True:
-    print("Communication with the DPiStepper board failed.")
-
-
-
-
 class StepperScreen(Screen):
 
-    def pressed(self):
-        """
-        Function called on button touch event for button with id: testButton
-        :return: None
-        """
-        print("Callback from StepperScreen.pressed()")
+    def switch(self):
+        SCREEN_MANAGER.current = SERVO_SCREEN_NAME
 
     def motorOnOff(self):
         # function that turns on and off the motor
@@ -301,10 +305,24 @@ class StepperScreen(Screen):
         # sleep(2)
         # dpiStepper.enableMotors(False)
 
+class ServoScreen(Screen):
+    def servo(self):
+        print("Servo example:")
+        # Rotate Servo 0 CW
+        i = 0
+        servo_number = 0
+        for i in range(180):
+            dpiComputer.writeServo(servo_number, i)
+            sleep(.05)
+
+
+
 
 
 Builder.load_file('stepper.kv')
+Builder.load_file('servo.kv')
 SCREEN_MANAGER.add_widget(StepperScreen(name=STEPPER_SCREEN_NAME))
+SCREEN_MANAGER.add_widget(ServoScreen(name=SERVO_SCREEN_NAME))
 
 
 def send_event(event_name):
