@@ -11,3 +11,21 @@
         pos_hint: {"center_x": 0.5, "center_y": 0.5}
         color: 1, 0.3, 0.5, 1
         on_press: root.servo()
+
+    DPEAButton:
+    # switch screens button
+        id: switching_button
+        text: 'stepper screen'
+        size: 100, 100
+        pos_hint: {"center_x": 0.5, "center_y": 0.75}
+        color: 1, 0.3, 0.5, 1
+        on_press: root.switchscreen()
+
+    DPEAButton:
+    # switch screens button
+        id: switching_button
+        text: 'stepper screen'
+        size: 100, 100
+        pos_hint: {"center_x": 0.5, "center_y": 0.75}
+        color: 1, 0.3, 0.5, 1
+        on_press: root.servoswitch()
