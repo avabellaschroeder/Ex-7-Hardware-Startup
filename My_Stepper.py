@@ -333,12 +333,14 @@ class ServoScreen(Screen):
                     print("Input 0 is HIGH")
             else:
                 print("Input 0 is LOW")
-                self.servo()
+                threading.Thread(target=self.servo).start()
                 sleep(1)
 
     def switchthreading(self):
-        switchthread = threading.Thread(target=switch)
-        switchthread.start()
+        threading.Thread(target=self.switch).start()
+        sleep(2)
+
+
 
 Builder.load_file('stepper.kv')
 Builder.load_file('servo.kv')
