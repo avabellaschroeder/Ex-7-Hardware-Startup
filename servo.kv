@@ -13,19 +13,19 @@
         on_press: root.servo()
 
     DPEAButton:
-    # switch screens button
+    # white and black wire switch
         id: switching_button
-        text: 'stepper screen'
+        text: 'use the switch (w&b wire)'
         size: 100, 100
-        pos_hint: {"center_x": 0.5, "center_y": 0.75}
+        pos_hint: {"center_x": 0.5, "center_y": 0.25}
         color: 1, 0.3, 0.5, 1
-        on_press: root.switchscreen()
+        on_press: root.switchthreading()
 
     DPEAButton:
     # switch screens button
-        id: switching_button
+        id: switching_button2
         text: 'stepper screen'
         size: 100, 100
         pos_hint: {"center_x": 0.5, "center_y": 0.75}
         color: 1, 0.3, 0.5, 1
-        on_press: root.servoswitch()
+        on_press: root.switchscreen2()
