@@ -1,3 +1,5 @@
+import threading
+
 import pygame
 import os
 import kivy
@@ -306,10 +308,11 @@ class StepperScreen(Screen):
         # sleep(2)
         # dpiStepper.enableMotors(False)
 
-class ServoScreen(Screen):
 
-    def switchscreen(self):
+class ServoScreen(Screen):
+    def switchscreen2(self):
         SCREEN_MANAGER.current = STEPPER_SCREEN_NAME
+
     def servo(self):
         print("servo moving")
         # Rotate Servo 0 CW
@@ -318,18 +321,24 @@ class ServoScreen(Screen):
         for i in range(180):
             dpiComputer.writeServo(servo_number, i)
             sleep(.05)
-    # def servoswitch(self):
-    #     if switch.value:
-    #         time.sleep(0.05)
-    #         # wait 50 ms to see if switch is still on
-    #         if switch.value:
-    #             # ok, it's really pressed
+    def switch(self):
+        print("switch tings")
+        value = dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_0)
+        dpiComputer.writeDigitalOut(dpiComputer.OUT_CONNECTOR__OUT_2, value)
+        while True:
+            if (dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_0)):
+                # binary bitwise AND of the value returned from read.gpio()
+                sleep(1)
+                if (dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_0)):  # a little debounce logic
+                    print("Input 0 is HIGH")
+            else:
+                print("Input 0 is LOW")
+                self.servo()
+                sleep(1)
 
-
-
-
-
-
+    def switchthreading(self):
+        switchthread = threading.Thread(target=switch)
+        switchthread.start()
 
 Builder.load_file('stepper.kv')
 Builder.load_file('servo.kv')
