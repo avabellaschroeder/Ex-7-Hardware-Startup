@@ -13,6 +13,15 @@
         on_press: root.switch()
 
     DPEAButton:
+    # switch screens button
+        id: test_button5
+        text: 'talon screen'
+        size: 100, 100
+        pos_hint: {"center_x": 0.75, "center_y": 0.75}
+        color: 1, 0.3, 0.5, 1
+        on_press: root.switchscreen5()
+
+    DPEAButton:
     # motorOnOff button
         id: test_button
         text: 'Off'
