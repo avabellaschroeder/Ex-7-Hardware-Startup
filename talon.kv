@@ -1,0 +1,13 @@
+<TalonScreen>:
+    name: 'talon'
+    FloatLayout:
+        size_hint: None, None
+
+    DPEAButton:
+    # switch screens button
+        id: switch_button
+        text: 'stepper screen'
+        size: 100, 100
+        pos_hint: {"center_x": 0.5, "center_y": 0.75}
+        color: 1, 0.3, 0.5, 1
+        on_press: root.switchscreent1()
