@@ -16,8 +16,6 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.properties import NumericProperty
 from kivy.uix.slider import Slider
-from kivy.uix import switch
-
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
 from pidev.kivy.PauseScreen import PauseScreen
@@ -28,7 +26,6 @@ from kivy.uix.image import Image
 from kivy.animation import Animation
 
 from datetime import datetime
-
 time = datetime
 
 from dpeaDPi.DPiComputer import DPiComputer
@@ -45,6 +42,7 @@ MIXPANEL = MixPanel("My Stepper", MIXPANEL_TOKEN)
 SCREEN_MANAGER = ScreenManager()
 STEPPER_SCREEN_NAME = 'stepper'
 SERVO_SCREEN_NAME = 'servo'
+TALON_SCREEN_NAME = 'talon'
 
 
 # STEPPER SETUP BELOW
@@ -90,6 +88,9 @@ class StepperScreen(Screen):
 
     def switch(self):
         SCREEN_MANAGER.current = SERVO_SCREEN_NAME
+
+    def switchscreen5(self):
+        SCREEN_MANAGER.current = TALON_SCREEN_NAME
 
     def motorOnOff(self):
         # function that turns on and off the motor
@@ -341,12 +342,20 @@ class ServoScreen(Screen):
         sleep(2)
 
 
+class TalonScreen(Screen):
+    def switchscreent1(self):
+        SCREEN_MANAGER.current = STEPPER_SCREEN_NAME
+
+
+
+
 
 Builder.load_file('stepper.kv')
 Builder.load_file('servo.kv')
+Builder.load_file('talon.kv')
 SCREEN_MANAGER.add_widget(StepperScreen(name=STEPPER_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(ServoScreen(name=SERVO_SCREEN_NAME))
-
+SCREEN_MANAGER.add_widget(TalonScreen(name=TALON_SCREEN_NAME))
 
 def send_event(event_name):
     """
