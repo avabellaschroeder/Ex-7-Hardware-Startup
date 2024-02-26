@@ -322,6 +322,15 @@ class ServoScreen(Screen):
         for i in range(180):
             dpiComputer.writeServo(servo_number, i)
             sleep(.05)
+
+        # print("  Rotate Servo 0 CCW")
+        # i = 0
+        # servo_number = 0
+        # for i in range(180, 0, -1):
+        #     dpiComputer.writeServo(servo_number, i)
+        #     sleep(.05)
+    #      counter clockwise version
+
     def switch(self):
         print("switch tings")
         value = dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_0)
@@ -345,6 +354,17 @@ class ServoScreen(Screen):
 class TalonScreen(Screen):
     def switchscreent1(self):
         SCREEN_MANAGER.current = STEPPER_SCREEN_NAME
+
+    def talon(self):
+        print("talon moving")
+        # Rotate Servo 0 CW
+        i = 0
+        servo_number = 0
+        for i in range(180):
+            dpiComputer.writeServo(servo_number, i)
+            sleep(.05)
+        print("done")
+
 
 
 
