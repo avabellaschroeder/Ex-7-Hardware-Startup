@@ -357,14 +357,36 @@ class TalonScreen(Screen):
 
     def talon(self):
         print("talon moving")
-        # Rotate Servo 0 CW
+        # green cw
+        # red ccw
+        # ah-rah-ange is stawp
+        # 180 is cw
+        # 45 ccw
+        # 135 is red for a little then stops then red foreva
+        #
+        # #CW
         i = 0
         servo_number = 0
-        for i in range(180):
+        for i in range(135):
             dpiComputer.writeServo(servo_number, i)
             sleep(.05)
+
+        #CCW
+        # i = 0
+        # servo_number = 0
+        # for i in range(180, 0, -1):
+        #     dpiComputer.writeServo(servo_number, i)
+        #     sleep(.05)
+        #
         print("done")
 
+    def talonstop(self):
+        print("making it stop")
+        i = 0
+        servo_number = 0
+        for i in range(90):
+            dpiComputer.writeServo(servo_number, i)
+            sleep(.05)
 
 
 
