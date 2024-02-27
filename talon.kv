@@ -20,3 +20,12 @@
         pos_hint: {"center_x": 0.5, "center_y": 0.5}
         color: 1, 0.3, 0.5, 1
         on_press: root.talon()
+
+    DPEAButton:
+    # talon stop button
+        id: talonstop_button
+        text: 'stop that ship'
+        size: 100, 100
+        pos_hint: {"center_x": 0.75, "center_y": 0.5}
+        color: 1, 0.3, 0.5, 1
+        on_press: root.talonstop()
