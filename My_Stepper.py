@@ -331,7 +331,7 @@ class ServoScreen(Screen):
         #     sleep(.05)
     #      counter clockwise version
 
-    def switch(self):
+    def limitswitch(self):
         print("switch tings")
         value = dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_0)
         dpiComputer.writeDigitalOut(dpiComputer.OUT_CONNECTOR__OUT_2, value)
@@ -347,7 +347,7 @@ class ServoScreen(Screen):
                 sleep(1)
 
     def switchthreading(self):
-        threading.Thread(target=self.switch).start()
+        threading.Thread(target=self.limitswitch).start()
         sleep(2)
 
 
@@ -355,31 +355,30 @@ class TalonScreen(Screen):
     def switchscreent1(self):
         SCREEN_MANAGER.current = STEPPER_SCREEN_NAME
 
-    def talon(self, x):
+    def talon(self, x, y, s):
         print("talon moving")
         # green cw
         # red ccw
         # ah-rah-ange is stawp
-        # 180 is cw
-        # 45 ccw
-        # 135 is red for a little then stops then red foreva
+        # 180 is cw and fast, 0 is ccw and fast, 0 is no movement
 
-        # #CW
+        # motor will spin from x to y. will run through fn x amount of times
+        # s is time it takes to complete motion.
         i = 0
         servo_number = 0
-        for i in range(x):
+        for i in range(x, y, -1):
             dpiComputer.writeServo(servo_number, i)
-            sleep(.05)
+            sleep(s)
         print("done")
 
     def talonspecific(self, x):
-        # CCW
-        print("talon ccw")
+        # CW, green light, takes about 20/90
+        print("talon specific")
         i = 0
         servo_number = 0
         for i in range(x, 90, -1):
             dpiComputer.writeServo(servo_number, i)
-            sleep(.05)
+            sleep(.2)
 
     def talonstop(self):
         print("making it stop")
@@ -387,19 +386,30 @@ class TalonScreen(Screen):
         servo_number = 0
         for i in range(90):
             dpiComputer.writeServo(servo_number, i)
-            sleep(.0)
-
+            sleep(0.0)
 
     def talonthreading(self):
-        threading.Thread(target=self.talon(180)).start()
-        threading.Thread(target=self.talonspecific(180)).start()
-        threading.Thread(target=self.talonstop).start()
+        threading.Thread(target=self.talon(180, 90, .05)).start()
         sleep(.5)
-        threading.Thread(target=self.talon(180)).start()
+        threading.Thread(target=self.talonspecific(180)).start()
+        sleep(5)
+        threading.Thread(target=self.talon(90, 0, .05)).start()
 
 
-
-
+    def talonlimitswitch(self):
+        print("switch tings")
+        value = dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_0)
+        dpiComputer.writeDigitalOut(dpiComputer.OUT_CONNECTOR__OUT_2, value)
+        while True:
+            if (dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_0)):
+                # binary bitwise AND of the value returned from read.gpio()
+                sleep(1)
+                if (dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_0)):  # a little debounce logic
+                    print("Input 0 is HIGH")
+            else:
+                print("Input 0 is LOW")
+                threading.Thread(target=self.talon(180, 90, .07)).start()
+                sleep(1)
 
 
 
