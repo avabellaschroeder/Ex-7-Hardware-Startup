@@ -355,7 +355,7 @@ class TalonScreen(Screen):
     def switchscreent1(self):
         SCREEN_MANAGER.current = STEPPER_SCREEN_NAME
 
-    def talon(self):
+    def talon(self, x):
         print("talon moving")
         # green cw
         # red ccw
@@ -363,22 +363,23 @@ class TalonScreen(Screen):
         # 180 is cw
         # 45 ccw
         # 135 is red for a little then stops then red foreva
-        #
+
         # #CW
         i = 0
         servo_number = 0
-        for i in range(135):
+        for i in range(x):
             dpiComputer.writeServo(servo_number, i)
             sleep(.05)
-
-        #CCW
-        # i = 0
-        # servo_number = 0
-        # for i in range(180, 0, -1):
-        #     dpiComputer.writeServo(servo_number, i)
-        #     sleep(.05)
-        #
         print("done")
+
+    def talonspecific(self, x):
+        # CCW
+        print("talon ccw")
+        i = 0
+        servo_number = 0
+        for i in range(x, 90, -1):
+            dpiComputer.writeServo(servo_number, i)
+            sleep(.05)
 
     def talonstop(self):
         print("making it stop")
@@ -386,7 +387,18 @@ class TalonScreen(Screen):
         servo_number = 0
         for i in range(90):
             dpiComputer.writeServo(servo_number, i)
-            sleep(.05)
+            sleep(.0)
+
+
+    def talonthreading(self):
+        threading.Thread(target=self.talon(180)).start()
+        threading.Thread(target=self.talonspecific(180)).start()
+        threading.Thread(target=self.talonstop).start()
+        sleep(.5)
+        threading.Thread(target=self.talon(180)).start()
+
+
+
 
 
 
