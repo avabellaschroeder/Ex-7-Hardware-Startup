@@ -389,12 +389,12 @@ class TalonScreen(Screen):
             sleep(0.0)
 
     def talonthreading(self):
-        threading.Thread(target=self.talon(180, 90, .05)).start()
-        sleep(.5)
-        threading.Thread(target=self.talonspecific(180)).start()
-        sleep(5)
-        threading.Thread(target=self.talon(90, 0, .05)).start()
-
+        def talonthreadingbs():
+            self.talon(180, 90, .05)
+            sleep(.05)
+            self.talonspecific(180)
+            self.talon(90, 0, .05)
+        threading.Thread(target=talonthreadingbs).start()
 
     def talonlimitswitch(self):
         print("switch tings")
@@ -410,8 +410,6 @@ class TalonScreen(Screen):
                 print("Input 0 is LOW")
                 threading.Thread(target=self.talon(180, 90, .07)).start()
                 sleep(1)
-
-
 
 
 Builder.load_file('stepper.kv')
